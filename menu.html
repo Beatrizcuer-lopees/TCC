@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitura</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('https://i.postimg.cc/DybTqPjr/livros.avif');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* espaço pra barra do topo */
+        padding-top: 70px;
+    }
+
+    /* 🔝 BARRA SUPERIOR */
+    .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        background: rgba(0,0,0,0.85);
+        color: white;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 10px 20px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .topbar h2 {
+        margin: 0;
+    }
+
+    .menu {
+        display: flex;
+        gap: 10px;
+    }
+
+    .menu button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 8px;
+
+        background: rgba(255,255,255,0.1);
+        color: white;
+        cursor: pointer;
+
+        transition: 0.3s;
+    }
+
+    .menu button:hover {
+        background: #1abc9c;
+        transform: scale(1.05);
+    }
+
+    /* CONTAINER ORIGINAL */
+    .container {
+        background: rgba(0, 0, 0, 0.65);
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        color: #fff;
+        width: 300px;
+        backdrop-filter: blur(8px);
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 20px;
+    }
+
+    a {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #95a5a6;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    a:hover {
+        background-color: #7f8c8d;
+        transform: scale(1.05);
+    }
+</style>
+<!-- 🔝 NOVA BARRA -->
+<div class="topbar">
+    <h2>MENU</h2>
+
+    <div class="menu">
+        <a href="escrever.html" class="menu-btn">✍️ Escrever</a>
+        <a href="historico.html" class="menu-btn">🧾 Histórico</a>
+    </div>
+</div>
+
+<!-- SEU CONTEÚDO ORIGINAL -->
+<div class="container">
+    <h1>Oiiii, tudo bem? 👋</h1>
+
+    <p><em>Vamos criar histórias?</em></p>
+
+    <a href="criar.html" class="voltar">
+        Ir para a página da IA
+    </a>
+</div>
+</body>
+</html>

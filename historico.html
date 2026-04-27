@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Histórico</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+
+    background-image: url('https://i.postimg.cc/DybTqPjr/livros.avif');
+    background-size: cover;
+    background-position: center;
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* caixa */
+.box {
+    background: rgba(0,0,0,0.75);
+    padding: 20px;
+    border-radius: 15px;
+    width: 380px;
+    color: white;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+/* item */
+.item {
+    background: rgba(255,255,255,0.1);
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item:hover {
+    background: #1abc9c;
+}
+
+/* botão delete */
+.del {
+    background: red;
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* botão voltar */
+.voltar {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    background: #95a5a6;
+    color: white;
+    cursor: pointer;
+}
+
+.voltar:hover {
+    background: #1abc9c;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>📜 Histórico</h2>
+
+    <div id="lista"></div>
+
+    <button class="voltar" onclick="voltarMenu()">
+        🔙 Voltar ao menu
+    </button>
+</div>
+
+<script>
+
+function carregar() {
+    let lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    let historias = JSON.parse(localStorage.getItem("historias")) || [];
+
+    if (historias.length === 0) {
+        lista.innerHTML = "<p>Nenhuma história ainda</p>";
+        return;
+    }
+
+    historias.forEach((h, index) => {
+
+        let div = document.createElement("div");
+        div.className = "item";
+
+        // clicar para editar
+        div.onclick = function () {
+            window.location.href = "escrever.html?id=" + index;
+        };
+
+        let texto = document.createElement("span");
+        texto.innerText = "📄 História " + (index + 1);
+
+        // botão deletar
+        let btn = document.createElement("button");
+        btn.innerText = "🗑️";
+        btn.className = "del";
+
+        btn.onclick = function (e) {
+            e.stopPropagation(); // não abrir edição
+
+            deletar(index);
+        };
+
+        div.appendChild(texto);
+        div.appendChild(btn);
+
+        lista.appendChild(div);
+    });
+}
+
+function deletar(index) {
+    let historias = JSON.parse(localStorage.getItem("historias")) || [];
+
+    historias.splice(index, 1); // remove 1 item
+
+    localStorage.setItem("historias", JSON.stringify(historias));
+
+    carregar(); // recarrega lista
+}
+
+function voltarMenu() {
+    window.location.href = "menu.html"; // troque se seu menu tiver outro nome
+}
+
+carregar();
+
+</script>
+
+</body>
+</html>
