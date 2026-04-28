@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('https://i.postimg.cc/DybTqPjr/livros.avif') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.campo {
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* olho senha */
+.senha-box input {
+    padding-right: 40px;
+}
+
+.toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* 🔥 BOTÃO PADRÃO DO SITE */
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #95a5a6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #1abc9c;
+    transform: scale(1.03);
+}
+
+/* link login */
+.login-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+#mensagem {
+    margin-top: 15px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Cadastro</h2>
+
+    <form onsubmit="validarCadastro(event)">
+
+        <div class="campo">
+            <input type="text" id="nome" placeholder="Nome">
+        </div>
+
+        <div class="campo">
+            <input type="email" id="email" placeholder="Email">
+        </div>
+
+        <div class="campo">
+            <input type="text" id="idade" placeholder="Idade">
+        </div>
+
+        <div class="campo senha-box">
+            <input type="password" id="senha" placeholder="Senha">
+            <span class="toggle" onclick="toggleSenha('senha')">👁️</span>
+        </div>
+
+        <div class="campo senha-box">
+            <input type="password" id="confirmarSenha" placeholder="Confirmar senha">
+            <span class="toggle" onclick="toggleSenha('confirmarSenha')">👁️</span>
+        </div>
+
+        <!-- 🔥 BOTÃO PADRONIZADO -->
+        <button type="submit" class="btn">Cadastrar</button>
+    </form>
+
+    <div class="login-link">
+        Já tem uma conta? <a href="entrar.html">Entrar</a>
+    </div>
+
+    <p id="mensagem"></p>
+</div>
+
+<script>
+function toggleSenha(id) {
+    let campo = document.getElementById(id);
+    campo.type = campo.type === "password" ? "text" : "password";
+}
+
+function validarCadastro(event) {
+    event.preventDefault();
+
+    let nome = document.getElementById("nome").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let idade = document.getElementById("idade").value.trim();
+    let senha = document.getElementById("senha").value.trim();
+    let confirmarSenha = document.getElementById("confirmarSenha").value.trim();
+    let mensagem = document.getElementById("mensagem");
+
+    if (!nome || !email || !idade || !senha || !confirmarSenha) {
+        mensagem.style.color = "red";
+        mensagem.textContent = "Preencha todos os campos!";
+        return;
+    }
+
+    if (isNaN(idade)) {
+        mensagem.style.color = "red";
+        mensagem.textContent = "Digite uma idade válida!";
+        return;
+    }
+
+    idade = parseInt(idade);
+
+    if (idade < 16) {
+        mensagem.style.color = "red";
+        mensagem.textContent = "É necessário ter 16 anos ou mais.";
+        return;
+    }
+
+    if (senha.length < 6) {
+        mensagem.style.color = "red";
+        mensagem.textContent = "A senha deve ter pelo menos 6 caracteres.";
+        return;
+    }
+
+    if (senha !== confirmarSenha) {
+        mensagem.style.color = "red";
+        mensagem.textContent = "As senhas não coincidem!";
+        return;
+    }
+
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    let existe = usuarios.find(u => u.email === email);
+    if (existe) {
+        mensagem.style.color = "red";
+        mensagem.textContent = "Este email já está cadastrado!";
+        return;
+    }
+
+    usuarios.push({ nome, email, idade, senha });
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+    mensagem.style.color = "green";
+    mensagem.textContent = "Cadastro realizado com sucesso!";
+
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 1500);
+}
+</script>
+
+</body>
+</html>
